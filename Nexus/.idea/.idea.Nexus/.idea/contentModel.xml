@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Project\Nexus\Nexus" t="IncludeRecursive">
+      <e p="ActionContainers" t="Include">
+        <e p="ActionContainer.cs" t="Include" />
+        <e p="IActionContainer.cs" t="Include" />
+        <e p="ReturnActionContainer.cs" t="Include" />
+        <e p="SimpleActionContainer.cs" t="Include" />
+        <e p="ThreadActionContainer.cs" t="Include" />
+      </e>
+      <e p="Actors" t="Include">
+        <e p="Actor.cs" t="Include" />
+        <e p="BindManager.cs" t="Include" />
+      </e>
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Core" t="Include">
+        <e p="Adress.cs" t="Include" />
+        <e p="Channels" t="Include">
+          <e p="Channel.cs" t="Include" />
+          <e p="IChannel.cs" t="Include" />
+          <e p="MultiChannel.cs" t="Include" />
+        </e>
+        <e p="IListener.cs" t="Include" />
+        <e p="Nexus.cs" t="Include" />
+      </e>
+      <e p="Messages" t="Include">
+        <e p="IMessage.cs" t="Include" />
+        <e p="Message.cs" t="Include" />
+        <e p="Request.cs" t="Include" />
+        <e p="Respounce.cs" t="Include" />
+      </e>
+      <e p="Nexus.csproj" t="IncludeRecursive" />
+      <e p="Nexus.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+      </e>
+      <e p="ThreadSchedulers" t="Include">
+        <e p="IMessageScheduler.cs" t="Include" />
+        <e p="IScheduler.cs" t="Include" />
+        <e p="LightSchedulers" t="Include">
+          <e p="ILightScheduler.cs" t="Include" />
+          <e p="SimpleLightScheduler.cs" t="Include" />
+        </e>
+        <e p="SimpleScheduler.cs" t="Include" />
+        <e p="SingleThreadScheduler.cs" t="Include" />
+        <e p="ThreadMessageScheduler.cs" t="Include" />
+        <e p="UnityMessageScheduler.cs" t="Include" />
+        <e p="UnityThreadScheduler.cs" t="Include" />
+      </e>
+      <e p="Unity" t="Include">
+        <e p="IUpdated.cs" t="Include" />
+        <e p="UpdateService.cs" t="Include" />
+      </e>
+    </e>
+    <e p="C:\Users\Сергей\.Rider2018.1\system\resharper-host\local\Transient\ReSharperHost\v12\SolutionCaches\_Nexus.-680745993.00" t="ExcludeRecursive" />
+  </component>
+</project>
