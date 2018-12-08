@@ -13,17 +13,17 @@
 //   limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using Nexus.ActionContainers;
+using Nexus.Actors;
 using Nexus.Core;
 using Nexus.Core.Channels;
 using Nexus.Messages;
 using Nexus.ThreadSchedulers;
 using Nexus.ThreadSchedulers.LightSchedulers;
+using UnityEngine;
 
-namespace Nexus.Actors
+namespace Nexus.Unity
 {
-    public class Actor : IListener
+    public class MonoActor : MonoBehaviour, IListener
     {
         private readonly BindManager _bindManager = new BindManager();
         protected Core.Nexus Nexus;
@@ -32,12 +32,11 @@ namespace Nexus.Actors
         protected IChannel ToMe;
         private bool _isQuit;
 
-        public Actor(IMessageScheduler scheduler)
+        private void Awake()
         {
-            Scheduler = scheduler;
+            Scheduler = new UnityMessageScheduler();
             LightScheduler = new SimpleLightScheduler(_bindManager);
             Scheduler.Add(LightScheduler);
-            Subscribe();
         }
 
         protected virtual void Subscribe()

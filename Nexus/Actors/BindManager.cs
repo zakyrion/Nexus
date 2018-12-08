@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using Nexus.ActionContainers;
 using Nexus.Messages;
+using UnityEngine;
 
 namespace Nexus.Actors
 {
@@ -76,39 +77,44 @@ namespace Nexus.Actors
         public void InvokeCallback(int id, object param)
         {
             _requests[id].Invoke(param);
+            _requests.Remove(id);
         }
 
         public void Invoke(object param)
         {
             var type = param.GetType();
-            Invoke(type, param);
-        }
 
-        protected void Invoke(Type type, object param)
-        {
-            List<IActionContainer> containers = null;
+            List<IActionContainer> containers;
 
             try
             {
                 if (Actions.TryGetValue(type, out containers))
+                {
                     foreach (var container in containers)
                         container.Invoke(param);
-                else if (type == typeof(Message))
+                }
+                else
                 {
-                    var message = (Message)param;
-                    if (message.IsRequest)
+                    var message = param as IMessage;
+                    if (message != null)
                     {
-                        type = message.Data.GetType();
-                        if (Actions.TryGetValue(type, out containers))
-                            foreach (var container in containers)
-                                container.Invoke(param);
+                        if (message.IsRequest)
+                        {
+                            type = message.Data.GetType();
+                            if (Actions.TryGetValue(type, out containers))
+                                foreach (var container in containers)
+                                    container.Invoke(param);
+                        }
+                        else
+                        {
+                            InvokeCallback(message.Id, message.Data);
+                        }
                     }
-                    else
-                        InvokeCallback(message.Id, message.Data);
                 }
             }
             catch (Exception e)
             {
+                Debug.LogError("Exception: " + e);
                 ExceptionHandler?.Invoke(e, param);
             }
         }

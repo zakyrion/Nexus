@@ -21,7 +21,7 @@ namespace Nexus.ThreadSchedulers
     public class UnityMessageScheduler : IMessageScheduler, IUpdated
     {
         protected volatile List<ILightScheduler> Schedulers = new List<ILightScheduler>();
-        private readonly int _maxActions = 1000;
+        private readonly int _maxActions;
         
         public UnityMessageScheduler(int maxActions = 1000)
         {
@@ -50,10 +50,14 @@ namespace Nexus.ThreadSchedulers
             
             for (var i = 0; i < Schedulers.Count; i++)
             {
-                Schedulers[i].Execute(maxAction);
-                maxAction -= Schedulers[i].Actions;
-                if (maxAction < 0)
-                    break;
+                if (Schedulers[i].Actions > 0)
+                {
+                    var leftActions = maxAction - Schedulers[i].Actions;
+                    Schedulers[i].Execute(maxAction);
+                    maxAction = leftActions;
+                    if (maxAction < 0)
+                        break;
+                }
             }
         }
     }
