@@ -10,8 +10,8 @@ public class UpdateManager : MonoBehaviour
 	private readonly List<IUpdateble> _updatebles = new List<IUpdateble>();
 	private readonly HashSet<IUpdateble> _hash = new HashSet<IUpdateble>();
 
-	private readonly ConcurrentQueue<IUpdateble> _addQueue = new ConcurrentQueue<IUpdateble>();
-	private readonly ConcurrentQueue<IUpdateble> _removeQueue = new ConcurrentQueue<IUpdateble>();
+	private static readonly ConcurrentQueue<IUpdateble> _addQueue = new ConcurrentQueue<IUpdateble>();
+	private static readonly ConcurrentQueue<IUpdateble> _removeQueue = new ConcurrentQueue<IUpdateble>();
 
 	// Start is called before the first frame update
 	private void Awake()
@@ -52,12 +52,12 @@ public class UpdateManager : MonoBehaviour
 
 	public static void Subscribe(IUpdateble entity)
 	{
-		_manager._addQueue.Enqueue(entity);
+		_addQueue.Enqueue(entity);
 	}
 
 	public static void Unsubscribe(IUpdateble entity)
 	{
-		_manager._removeQueue.Enqueue(entity);
+		_removeQueue.Enqueue(entity);
 	}
 
 	#endregion

@@ -1,12 +1,8 @@
-﻿using System;
-
-public interface IInvoker
+﻿public interface IInvoker
 {
 	T Convert<T>() where T : IInvoker;
-
 	void Quit();
 }
-
 
 public abstract class InvokerBase<T> : IInvoker where T: IInvokable
 {

@@ -86,7 +86,7 @@ public class ChannelTree
 						? new Address(next)
 						: new Address($"{Address.Path}/{next}");
 					
-					Debug.Log($"Add node to path: {nextAddress} thread: {Thread.CurrentThread.ManagedThreadId}");
+					Debug.Log($"Add node to path: {nextAddress}");
 					nextNode = new Node(nextAddress, this);
 					_childrenNodes.Add(next, nextNode);
 				}

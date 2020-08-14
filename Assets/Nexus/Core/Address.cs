@@ -1,4 +1,6 @@
-﻿namespace Nexus.Core
+﻿using System;
+
+namespace Nexus.Core
 {
 	public struct Address
 	{
@@ -48,6 +50,11 @@
 		public string GetLast()
 		{
 			return System.IO.Path.GetFileName(Path);
+		}
+
+		public bool IsEmpty()
+		{
+			return String.IsNullOrEmpty(Path);
 		}
 
 		public string GetFirst()

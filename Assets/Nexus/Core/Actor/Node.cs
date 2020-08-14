@@ -62,7 +62,7 @@ public class Node : Actor<Node.Invoker>
 	public T GetActorHandler<T>(Address address) where T : IInvoker
 	{
 		var actor = ChannelTree.Get(address);
-		Debug.Log($"Actor: {actor} at path: {address}");
+		Debug.Log($"Actor: {actor} at path: {address} Type: {typeof(T)}");
 		return actor != null ? actor.GetInvoker<T>() : default(T);
 	}
 

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Nexus.Core;
-using UnityEngine;
 
 
 /*
@@ -11,14 +9,14 @@ using UnityEngine;
  * класс Invoker добавляет вызовы всех методов в очередь выполнения, а так же передает параметры.
  * Больше нет никаких сообщений и тд, только Invoker и запросы к нему
  */
-public class Actor<T> : IInvokable where T : IInvoker
+public abstract class Actor<T> : IInvokable where T : IInvoker
 {
 	protected Node.Invoker Parent;
-	protected Address Address;
 	protected IExecutor Executor;
 	protected readonly BindManager BindManager;
+	public virtual Address Address { get; protected set; }
 
-	protected Actor(IExecutor executor)
+	public Actor(IExecutor executor)
 	{
 		BindManager = new BindManager(executor);
 		Executor = executor;
@@ -26,12 +24,11 @@ public class Actor<T> : IInvokable where T : IInvoker
 
 	public virtual void OnAdd(Address address, Node.Invoker parent)
 	{
-		Debug.Log($"On Add: {Thread.CurrentThread.ManagedThreadId}");
-
 		Executor.Run(async () =>
 		{
-			Debug.Log($"Call lambda: {Thread.CurrentThread.ManagedThreadId}");
-			Address = address;
+			if (address.IsEmpty())
+				Address = address;
+			
 			Parent = parent;
 			return true;
 		});
@@ -41,7 +38,7 @@ public class Actor<T> : IInvokable where T : IInvoker
 
 	#region Invoke
 
-	public virtual IInvoker InvokerCurrent { get; protected set; }
+	public abstract IInvoker InvokerCurrent { get; }
 
 	public virtual R GetInvoker<R>() where R : IInvoker
 	{
@@ -99,8 +96,9 @@ public class Actor<T> : IInvokable where T : IInvoker
 
 	#endregion
 
-	public void Dispose()
+	public virtual void Dispose()
 	{
 		BindManager.Dispose();
 	}
+
 }

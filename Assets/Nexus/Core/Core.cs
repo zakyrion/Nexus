@@ -38,10 +38,20 @@ public sealed class Core : Node
 	{
 		_core.Invoke(_core.AddActorInternal, address, invokable);
 	}
+	
+	public static void AddActor(IInvokable invokable)
+	{
+		_core.Invoke(_core.AddActorInternal, invokable);
+	}
 
 	public static void RemoveActor(Address address)
 	{
 		_core.Invoke(_core.RemoveActorInternal, address);
+	}
+	
+	public static void RemoveActor(IInvokable invokable)
+	{
+		_core.Invoke(_core.RemoveActorInternal, invokable);
 	}
 
 	public static async Task<T> GetActor<T>(Address address) where T : IInvoker
@@ -59,11 +69,31 @@ public sealed class Core : Node
 
 		_core.AddActorHandler(address, invokable);
 	}
+	
+	private void AddActorInternal(IInvokable invokable)
+	{
+		if (_core == null)
+			RunCoreAtMainTread();
+
+		var address = invokable.Address.IsEmpty() ? invokable.GetType().Name : invokable.Address.Path;
+		
+		_core.AddActorHandler(address, invokable);
+	}
 
 	private void RemoveActorInternal(Address address)
 	{
 		if (_core == null)
 			RunCoreAtMainTread();
+
+		_core.RemoveActorHandler(address);
+	}
+	
+	private void RemoveActorInternal(IInvokable invokable)
+	{
+		if (_core == null)
+			RunCoreAtMainTread();
+
+		var address = invokable.Address.IsEmpty() ? invokable.GetType().Name : invokable.Address.Path;
 
 		_core.RemoveActorHandler(address);
 	}
